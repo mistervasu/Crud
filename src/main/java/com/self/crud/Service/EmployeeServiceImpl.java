@@ -2,6 +2,7 @@ package com.self.crud.Service;
 
 import com.self.crud.CrudRepository.EmployeeRepo;
 import com.self.crud.DTO.EmployeeDto;
+import com.self.crud.exception.EmailAlreadyExistsException;
 import com.self.crud.exception.ResourceNotFoundException;
 import com.self.crud.mapper.employeeMapper;
 import com.self.crud.model.Employee;
@@ -12,6 +13,7 @@ import org.springframework.boot.SpringBootVersion;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -37,6 +39,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 
         //Now Convert employeeDto to employee JPA entity
         //Employee employee = employeeMapper.convertToEntity(employeeDto);
+
+        Optional<Employee> OptionalEmployee = employeeRepo.findByEmail(employeeDto.getEmail());
+
+        if(OptionalEmployee.isPresent()){
+            throw new EmailAlreadyExistsException("Email Already Exists for user");
+        }
+
 
         Employee employee = modelMapper.map(employeeDto, Employee.class);    //using Model Mapper
         Employee savedEmployee = employeeRepo.save(employee);
