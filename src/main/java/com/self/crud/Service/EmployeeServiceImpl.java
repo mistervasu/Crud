@@ -23,7 +23,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     private final EmployeeRepo employeeRepo;
     //using ModelMapper
-    private ModelMapper modelMapper = new ModelMapper();
+    private ModelMapper modelMapper;
 
     @Autowired   //if there is only one constructor then no need to use @Autowired from spring 4.3 onwards
     public EmployeeServiceImpl(EmployeeRepo employeeRepo) {

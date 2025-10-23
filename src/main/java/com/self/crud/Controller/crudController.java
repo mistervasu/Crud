@@ -5,6 +5,7 @@ import com.self.crud.Service.EmployeeService;
 import com.self.crud.exception.ErrorDetails;
 import com.self.crud.exception.ResourceNotFoundException;
 import com.self.crud.model.Employee;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,7 @@ public class crudController {
 
     @PostMapping("/create")
     //@ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<EmployeeDto> saveEmployee(@RequestBody EmployeeDto employee){
+    public ResponseEntity<EmployeeDto> saveEmployee(@Valid @RequestBody EmployeeDto employee){
         EmployeeDto savedEmployee = employeeService.saveEmployee(employee);
         return new ResponseEntity<>(savedEmployee, HttpStatus.CREATED);
     }
@@ -46,7 +47,7 @@ public class crudController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<EmployeeDto> updateEmployee(@PathVariable Integer id, @RequestBody EmployeeDto employee){
+    public ResponseEntity<EmployeeDto> updateEmployee(@Valid @PathVariable Integer id, @RequestBody EmployeeDto employee){
         return ResponseEntity.ok(employeeService.updateEmployee(employee,id));
     }
 
